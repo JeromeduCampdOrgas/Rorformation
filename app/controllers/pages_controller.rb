@@ -4,7 +4,7 @@ class PagesController < ApplicationController
     @name = params[:name]
    end
    def home
-
+      ContactMailer.contact(Post.first).deliver_now
    end
 
 end

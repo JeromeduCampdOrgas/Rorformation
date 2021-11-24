@@ -1,17 +1,5 @@
 <h1>Créer un article</h1>
 
-<%= form_for @post do |form| %>
-<div class="form-group mb-10">
-    <label>Titre de l'article</label>
-    <%= form.text_field :name, class: 'form-control' %>
-</div>
-<div class="form-group m-auto">
-  <label >Contenu de l'article</label>
-  <%= form.text_area :content, size: "70x5" ,class: 'form-control' %>
-</div>
-<div class="form-group m-auto">
-<button type="submit" class="btn btn-primary">Créer un article</button>
-</div>
-<% end %>
+<%= render 'form', post: @post  %>
 
 

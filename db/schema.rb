@@ -10,13 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_21_142445) do
+ActiveRecord::Schema.define(version: 2021_11_23_163127) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.string "slug"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "posts_count", default: 0
+  end
+
+  create_table "meta", force: :cascade do |t|
+    t.string "name"
+    t.string "metaable_type"
+    t.integer "metaable_id"
+    t.index ["metaable_type", "metaable_id"], name: "index_metas_on_metaable"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -24,6 +32,22 @@ ActiveRecord::Schema.define(version: 2021_11_21_142445) do
     t.text "content", limit: 4294967295
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
+    t.boolean "online", default: false
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_posts_on_category_id"
   end
 
+  create_table "posts_tags", id: false, force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "tag_id", null: false
+    t.index ["post_id", "tag_id"], name: "index_posts_tags_on_post_id_and_tag_id"
+    t.index ["tag_id", "post_id"], name: "index_posts_tags_on_tag_id_and_post_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+  end
+
+  add_foreign_key "posts", "categories"
 end

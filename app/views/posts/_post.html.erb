@@ -1,0 +1,22 @@
+<h2><%= post.name %></h2>
+<p><%= post.content %></p>
+
+<% if post.category %>
+    <p>Catégorie: <%= post.category.name %></p>
+<% end %>
+
+<% if !post.tags.empty? %>
+    <p>
+    Tags: 
+    <!-- 1°façon de faire==> <% post.tags.map(&:name).join(', ') %>-->
+    <% post.tags.each do |tag| %>
+    <%= tag.name %>,
+    <% end %>
+    </p>
+<% end %>
+<p>
+<%= link_to('Lire la suite', @post,class: 'btn btn-primary') %>
+   
+    <a href="<%= edit_post_path(post.id) %>" class="btn btn-dark">Editer</a>
+    <a href="<%= post_path(post.id) %>" class="btn btn-danger" data-confirm="Etes-vous sûr?" data-method="DELETE">Supprimer</a>
+</p>
